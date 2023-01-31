@@ -2,13 +2,15 @@ from flask import Flask, request, jsonify, make_response
 
 flask_app = Flask(__name__)
 
-@flask_app.route("/", methods=["POST", "OPTIONS"])
+@flask_app.route("/", methods=["GET", "POST", "OPTIONS"])
 def api_create_order():
     print(request.data)
     if request.method == "OPTIONS": # CORS preflight
         return _build_cors_preflight_response()
     elif request.method == "POST": # The actual request following the preflight  # Whatever.
         return _corsify_actual_response(jsonify({"request" : request.get_json()}))
+    elif request.method == "GET":
+        return _corsify_actual_response(jsonify({"request" : "getting get request"}))
     else:
         raise RuntimeError("Weird - don't know how to handle method {}".format(request.method))
 
