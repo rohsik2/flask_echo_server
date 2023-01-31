@@ -2,17 +2,29 @@ from flask import Flask, request, jsonify, make_response
 
 flask_app = Flask(__name__)
 
-@flask_app.route("/", methods=["GET", "POST", "OPTIONS"])
-def api_create_order():
-    print(request.data)
+HTTP_METHODS = ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH']
+
+@flask_app.route('/', defaults={'path': ''}, methods=HTTP_METHODS)
+@flask_app.route('/<path:path>', methods=HTTP_METHODS)
+def api_create_order(path):
+    default_body = {
+        "method" : request.method,
+        "body" : request.data.decode("UTF-8"),
+        "path" : path
+    }
+
+    print(default_body)
+
     if request.method == "OPTIONS": # CORS preflight
+        print("Get pre-flight option call")
         return _build_cors_preflight_response()
     elif request.method == "POST": # The actual request following the preflight  # Whatever.
-        return _corsify_actual_response(jsonify({"request" : request.get_json()}))
-    elif request.method == "GET":
-        return _corsify_actual_response(jsonify({"request" : "getting get request"}))
+        if(not request.is_json):
+            return _cors_response(jsonify(default_body))
+        default_body["request"] = request.get_json()
+        return _cors_response(jsonify(default_body))
     else:
-        raise RuntimeError("Weird - don't know how to handle method {}".format(request.method))
+        return _cors_response(jsonify(default_body))
 
 def _build_cors_preflight_response():
     response = make_response()
@@ -21,7 +33,7 @@ def _build_cors_preflight_response():
     response.headers.add('Access-Control-Allow-Methods', "*")
     return response
 
-def _corsify_actual_response(response):
+def _cors_response(response):
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
 
