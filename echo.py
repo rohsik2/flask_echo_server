@@ -9,7 +9,7 @@ def api_create_order():
         return _build_cors_preflight_response()
     elif request.method == "POST": # The actual request following the preflight  # Whatever.
         return _corsify_actual_response(jsonify({"request" : request.get_json()}))
-    elif request.method == "GET:
+    elif request.method == "GET":
         return _corsify_actual_response(jsonify({"request" : "getting get request"}))
     else:
         raise RuntimeError("Weird - don't know how to handle method {}".format(request.method))
