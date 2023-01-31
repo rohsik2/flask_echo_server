@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, make_response
 
 flask_app = Flask(__name__)
 
-@flask_app.route("/", methods=["POST", "OPTIONS"])
+@flask_app.route("/", methods=["GET", "POST", "OPTIONS"])
 def api_create_order():
     print(request.data)
     if request.method == "OPTIONS": # CORS preflight
