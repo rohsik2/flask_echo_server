@@ -10,4 +10,27 @@ pip3 install -r requirements.txt
 python3 ./echo.py
 ```
 
-이후 "/" 경로롤 통해서 get, post, option 등등을 보내실 수 있습니다.
+이후 아무 경로로 아무 method를 호출해서 보내시면 됩니다.
+# request Example
+```
+POST /aa HTTP/1.1
+
+{
+    "this" : "is json"
+}
+
+```
+
+
+# response Example
+```
+{
+    "body": "{\n    \"this\" :\"is json\"\n}",
+    "method": "POST",
+    "path": "aa",
+    "request": {
+        "this": "is json"
+    }
+}
+
+```
