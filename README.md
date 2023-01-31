@@ -4,6 +4,8 @@
 # how to use
 
 ```
+git clone https://github.com/rohsik2/flask_echo_server
+cd flask_echo_server
 pip3 install -r requirements.txt
 python3 ./echo.py
 ```
