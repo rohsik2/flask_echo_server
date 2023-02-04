@@ -26,4 +26,5 @@ jobs:
       - name: Test with pytest
         run: |
           pwd
+          tree -a
           python -m pytest ./testing.py
