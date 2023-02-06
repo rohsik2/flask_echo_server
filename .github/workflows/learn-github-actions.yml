@@ -8,6 +8,9 @@ jobs:
       matrix:
         python-version: ["3.7", "3.8", "3.9", "3.10"]
     steps:
+      - uses: actions/checkout@v2
+      - name: Run a one-line script
+        run: echo Hello, world!
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
