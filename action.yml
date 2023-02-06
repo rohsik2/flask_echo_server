@@ -1,0 +1,8 @@
+name : rohsik2-take-action
+description : This is an action to assgin myself to an issue for a repo 
+branding:
+  icon: 'paperclip'
+  color : 'white'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
